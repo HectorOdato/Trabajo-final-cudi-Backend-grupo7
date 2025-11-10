@@ -1,9 +1,10 @@
 import express from "express"
 import * as productController from "../handlers/product.handler.js"
+import {upload} from "../../shared/utils/multer.js";
 
 const productRouter = express.Router()
 
-productRouter.post("/", productController.saveProduct)
+productRouter.post('/', upload.single('image'), productController.createProduct);
 
 productRouter.get("/", productController.listProducts)
 
