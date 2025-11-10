@@ -1,22 +1,28 @@
 import Product from "../models/product.model.js";
 
-export async function crear(name, price, stock, status) {
+export async function crear(name, description,price, category, stock, image, status) {
   const productoNuevo = await Product.create({
-    name,
-    price,
-    stock,
-    status
+      name,
+      description,
+      price,
+      category,
+      stock,
+      image,
+      status
   })
 
   return productoNuevo
 }
 
-export async function actualizar(id, name, price, stock, status) {
+export async function actualizar(id, name, price, stock, status,description,category,image) {
   const productoActualizado = await Product.findByIdAndUpdate(id, {
-    name,
-    price,
-    stock,
-    status
+      name,
+      description,
+      price,
+      category,
+      stock,
+      image,
+      status
   })
   return productoActualizado
 }

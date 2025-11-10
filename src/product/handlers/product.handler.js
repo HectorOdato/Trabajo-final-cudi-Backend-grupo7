@@ -2,33 +2,36 @@ import { validateIfIsEmpty } from "../../shared/utils/validate-attribute.js";
 import validateID from "../../shared/utils/validate-id.util.js";
 import * as productRepository from "../repositories/product.repository.js";
 
-export async function saveProduct(req, res) {
+export const createProduct = async (req, res) => {
   try {
-    const { name, price, status, stock } = req.body;
+    const { name, description, price, category, stock, status } = req.body;
+    const image = req.file ? req.file.filename : null;
 
-    validateIfIsEmpty(name)
-    validateIfIsEmpty(price)
-    validateIfIsEmpty(status)
-    validateIfIsEmpty(stock)
+    validateIfIsEmpty(name);
+    validateIfIsEmpty(description);
+    validateIfIsEmpty(price);
+    validateIfIsEmpty(category);
+    validateIfIsEmpty(stock);
+    validateIfIsEmpty(status);
 
-    const productoCreado = await productRepository.crear(
+    const ProductoCreado = await productRepository.crear(
       name,
+      description,
       price,
+      category,
       stock,
+      image,
       status
-    );
-
-    res.status(201).json({
-      mensaje: "producto creado",
-      data: productoCreado
-    });
+    ); 
+    console.log("Producto creado con éxito:", ProductoCreado);
+    res.status(201).json({ 
+      message: "Producto creado", 
+      product: ProductoCreado });
   } catch (error) {
-    res.status(500).json({
-      mensaje: "error en el servidor",
-      error: error,
-    });
+    console.error("Error al crear producto:", error);
+    res.status(500).json({ mensaje: "error en el servidor", error: error.message });
   }
-}
+};
 
 export async function listProducts(req, res) {
   try {
@@ -86,18 +89,23 @@ export async function update(req, res) {
   try {
     const id = validateID(req)
 
-    const { name, price, status, stock } = req.body;
+    const { name, price, status, stock,description,category,image } = req.body;
 
     validateIfIsEmpty(name)
     validateIfIsEmpty(price)
     validateIfIsEmpty(status)
     validateIfIsEmpty(stock)
+    validateIfIsEmpty(description)
+    validateIfIsEmpty(category)
+    validateIfIsEmpty(image)
 
     const productoActualizado = await productRepository.actualizar(
-      id,
       name,
       price,
       stock,
+      description,
+      category,
+      image,
       status
     );
 
