@@ -1,6 +1,26 @@
 import { validateIfIsEmpty } from "../../shared/utils/validate-attribute.js";
 import validateID from "../../shared/utils/validate-id.util.js";
 import * as productRepository from "../repositories/product.repository.js";
+import { getCategoryByProp } from "../../category/repsitories/category.repository.js"
+
+export const getProductsByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params
+
+    // Validar que la categoría existe y está activa
+    const category = await getCategoryByProp({ _id: categoryId })
+
+    // Buscar productos que pertenezcan a esa categoría
+    const products = await ProductModel.find({ category: category._id, status: true }).populate("category")
+
+    res.status(200).json({
+      mensaje: `Productos de la categoría ${category.name}`,
+      products,
+    })
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error obteniendo productos por categoría", error: error.message })
+  }
+}
 
 export const createProduct = async (req, res) => {
   try {

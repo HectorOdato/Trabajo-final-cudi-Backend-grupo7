@@ -37,7 +37,6 @@ export const save = async (req, res) => {
 
     validateIfIsEmpty(name)
     validateIfIsEmpty(description)
-    validateIfIsEmpty(image)
 
     const category = await createCategory({ name, description, image })
 
