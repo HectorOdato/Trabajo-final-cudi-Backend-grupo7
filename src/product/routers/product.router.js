@@ -4,6 +4,8 @@ import {upload} from "../../shared/utils/multer.js";
 
 const productRouter = express.Router()
 
+productRouter.get("/category/:categoryId", productController.getProductsByCategory);
+
 productRouter.post('/', upload.single('image'), productController.createProduct);
 
 productRouter.get("/", productController.listProducts)
