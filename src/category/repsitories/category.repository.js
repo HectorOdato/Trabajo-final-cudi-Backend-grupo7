@@ -45,10 +45,5 @@ export const updateCategory = async (id, category) => {
 }
 
 export const removeCateogory = async (id) => {
-  await CategoryModel.findByIdAndUpdate(id, { status: false })
+  await CategoryModel.findOneAndDelete({ _id: id })
 }
-
-export const enableCategory = async (id) => {
-  await CategoryModel.findOneAndUpdate({ _id: id }, { status: true })
-}
-

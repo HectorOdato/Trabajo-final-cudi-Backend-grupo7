@@ -1,6 +1,6 @@
 import { validateIfIsEmpty } from "../../shared/utils/validate-attribute.js"
 import validateID from "../../shared/utils/validate-id.util.js"
-import { createCategory, enableCategory, getAllCategories, getCategoryByProp, removeCateogory, updateCategory } from "../repsitories/category.repository.js"
+import { createCategory, getAllCategories, getCategoryByProp, removeCateogory, updateCategory } from "../repsitories/category.repository.js"
 
 export const list = async (_, res) => {
   try {
@@ -53,13 +53,12 @@ export const update = async (req, res) => {
   try {
     const id = validateID(req)
 
-    const { name, description, image } = req.body
+    const { name, description,} = req.body
 
     validateIfIsEmpty(name)
     validateIfIsEmpty(description)
-    validateIfIsEmpty(image)
 
-    const category = await updateCategory(id, { name, description, image })
+    const category = await updateCategory(id, { name, description })
 
     res.status(200).json({
       message: "categoria actualizada",
@@ -85,16 +84,3 @@ export const remove = async (req, res) => {
   }
 }
 
-export const enable = async (req, res) => {
-  try {
-    const id = validateID(req)
-
-    await enableCategory(id)
-
-    res.status(200).json({
-      mssage: "categoria habilitada",
-    })
-  } catch (error) {
-    console.error(error)
-  }
-}

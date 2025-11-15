@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { remove, findById, list, save, update, enable } from "../handlers/category.handler.js";
+import { remove, findById, list, save, update,} from "../handlers/category.handler.js";
 
 const categoryRouter = Router()
 
@@ -12,7 +12,5 @@ categoryRouter.post("/", save)
 categoryRouter.put("/:id", update)
 
 categoryRouter.delete("/:id", remove)
-
-categoryRouter.patch("/enable/:id", enable)
 
 export default categoryRouter
