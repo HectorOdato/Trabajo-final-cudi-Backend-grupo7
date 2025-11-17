@@ -107,6 +107,7 @@ export async function findById(req, res) {
 
 export async function update(req, res) {
   try {
+    console.log("BODY:", req.body);
     const id = validateID(req)
 
     const { name, price, status, stock,description,category,image } = req.body;
