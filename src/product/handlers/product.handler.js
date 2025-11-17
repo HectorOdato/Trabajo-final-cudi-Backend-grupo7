@@ -7,10 +7,10 @@ export const getProductsByCategory = async (req, res) => {
   try {
     const { categoryId } = req.params
 
-    // Validar que la categoría existe y está activa
+    // verigficar que la categoria existe
     const category = await getCategoryByProp({ _id: categoryId })
 
-    // Buscar productos que pertenezcan a esa categoría
+    // esto es para buscar los productos de la categoria
     const products = await ProductModel.find({ category: category._id, status: true }).populate("category")
 
     res.status(200).json({
@@ -24,6 +24,7 @@ export const getProductsByCategory = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
+    console.log("PRODUCTO CREADO:", req.body);
     const { name, description, price, category, stock, status } = req.body;
     const image = req.file ? req.file.filename : null;
 
@@ -107,30 +108,22 @@ export async function findById(req, res) {
 
 export async function update(req, res) {
   try {
-    console.log("BODY:", req.body);
-    const id = validateID(req)
+    console.log("UPDATES:", req.body);
 
-    const { name, price, status, stock,description,category,image } = req.body;
+    const id = validateID(req);
 
-    validateIfIsEmpty(name)
-    validateIfIsEmpty(price)
-    validateIfIsEmpty(status)
-    validateIfIsEmpty(stock)
-    validateIfIsEmpty(description)
-    validateIfIsEmpty(category)
-    validateIfIsEmpty(image)
+    const { name, price, stock, description, category, status } = req.body;
 
     const productoActualizado = await productRepository.actualizar(
-      name,
-      price,
-      stock,
-      description,
-      category,
-      image,
-      status
+      id,
+      { name, price, stock, description, category, status }
     );
 
-    res.status(201).json(productoActualizado);
+    res.status(200).json({
+      message: "Producto actualizado",
+      data: productoActualizado,
+    });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -139,6 +132,7 @@ export async function update(req, res) {
     });
   }
 }
+
 
 export async function remove(req, res) {
   try {
@@ -159,7 +153,9 @@ export async function enable(req, res) {
   try {
     const id = validateID(req)
 
-    const productoHabilitado = await productRepository.habilitar(id);
+    const productoHabilitado = await productRepository.habilitar(id, {
+      status: true,
+    });
 
     res.status(200).json(productoHabilitado);
   } catch (error) {
