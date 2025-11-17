@@ -14,16 +14,13 @@ export async function crear(name, description,price, category, stock, image, sta
   return productoNuevo
 }
 
-export async function actualizar(id, name, price, stock, status,description,category,image) {
-  const productoActualizado = await Product.findByIdAndUpdate(id, {
-      name,
-      description,
-      price,
-      category,
-      stock,
-      image,
-      status
-  })
+export async function actualizar(id, data) {
+  const productoActualizado = await Product.findByIdAndUpdate(
+    id,
+    data,
+    { new: true,
+      runValidators: false
+    })
   return productoActualizado
 }
 
@@ -33,7 +30,7 @@ export async function obtenerUno(idProducto) {
 }
 
 export async function obtenerTodos() {
-  const productos = await Product.find({ status: true })
+  const productos = await Product.find()
   return productos
 }
 
@@ -43,7 +40,7 @@ export async function eliminar(id) {
   return productoEliminado
 }
 
-export async function habilitar(id) {
-  const productoHabilitado = await Product.findByIdAndUpdate(id, { status: true })
+export async function habilitar(id,data) {
+  const productoHabilitado = await Product.findByIdAndUpdate(id,data, { new: true })
   return productoHabilitado
 }
