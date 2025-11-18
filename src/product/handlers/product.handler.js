@@ -2,6 +2,7 @@ import { validateIfIsEmpty } from "../../shared/utils/validate-attribute.js";
 import validateID from "../../shared/utils/validate-id.util.js";
 import * as productRepository from "../repositories/product.repository.js";
 import { getCategoryByProp } from "../../category/repsitories/category.repository.js"
+import { subirImagenCloudinary } from "../../shared/utils/cloudinary.js";
 
 export const getProductsByCategory = async (req, res) => {
   try {
@@ -25,8 +26,14 @@ export const getProductsByCategory = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     console.log("PRODUCTO CREADO:", req.body);
+    console.log(req.file)
     const { name, description, price, category, stock, status } = req.body;
-    const image = req.file ? req.file.filename : null;
+    let image = null
+
+    if (req.file){
+      const cloudinaryResult = await subirImagenCloudinary(req.file.path);
+      image = cloudinaryResult.secure_url;
+    }
 
     validateIfIsEmpty(name);
     validateIfIsEmpty(description);

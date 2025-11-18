@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
+dotenv.config();
+console.log(process.env);
 import express from "express";
 import mongoose from "mongoose";
 import categoryRouter from "./category/routes/category.route.js";
@@ -7,7 +9,7 @@ import cors from "cors";
 import path from "path";
 
 
-dotenv.config();
+
 
 const app = express();
 
@@ -17,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productRouter)
 app.use("/api/categories", categoryRouter)
-app.use("/product/uploads/images", express.static(path.join(process.cwd(), "product/uploads/images")));
+app.use('product/uploads/images', express.static(path.join(process.cwd(), 'product/uploads/images')));
 
 app.use((_, res) => {
   res.status(404).json("404");
