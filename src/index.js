@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productRouter)
 app.use("/api/categories", categoryRouter)
+app.use("/api/auth", )
 app.use("/product/uploads/images", express.static(path.join(process.cwd(), "product/uploads/images")));
 
 app.use((_, res) => {
