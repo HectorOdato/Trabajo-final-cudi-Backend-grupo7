@@ -3,25 +3,7 @@ import validateID from "../../shared/utils/validate-id.util.js";
 import * as productRepository from "../repositories/product.repository.js";
 import { getCategoryByProp } from "../../category/repsitories/category.repository.js"
 import { subirImagenCloudinary } from "../../shared/utils/cloudinary.js";
-
-export const getProductsByCategory = async (req, res) => {
-  try {
-    const { categoryId } = req.params
-
-    // verigficar que la categoria existe
-    const category = await getCategoryByProp({ _id: categoryId })
-
-    // esto es para buscar los productos de la categoria
-    const products = await ProductModel.find({ category: category._id, status: true }).populate("category")
-
-    res.status(200).json({
-      mensaje: `Productos de la categoría ${category.name}`,
-      products,
-    })
-  } catch (error) {
-    res.status(400).json({ mensaje: "Error obteniendo productos por categoría", error: error.message })
-  }
-}
+import Product from "../models/product.model.js";
 
 export const createProduct = async (req, res) => {
   try {
@@ -171,5 +153,22 @@ export async function enable(req, res) {
       mensaje: "error en el servidor",
       error: error,
     });
+  }
+}
+
+export const getProductsByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params
+
+    const category = await getCategoryByProp({ _id: categoryId })
+
+    const products = await Product.find({ category: category._id, status: true }).populate("category")
+
+    res.status(200).json({
+      mensaje: `Productos de la categoría ${category.name}`,
+      products,
+    })
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error obteniendo productos por categoría", error: error.message })
   }
 }
