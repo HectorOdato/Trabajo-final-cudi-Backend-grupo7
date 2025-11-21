@@ -1,5 +1,5 @@
 import { generateAccessToken, generateRefreshToken } from "../../shared/utils/generate-token.util.js"
-import { comparePassword } from "../../shared/utils/handle-password.util.js"
+import { comparePassword } from "../../shared/utils/handler-password.util.js"
 
 const loginHandler = async (req, res) => {
   try {

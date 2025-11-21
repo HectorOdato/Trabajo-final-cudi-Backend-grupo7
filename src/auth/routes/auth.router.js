@@ -1,6 +1,6 @@
 import { Router } from "express"
-import loginHandler from "../handlers/login-user.handler.js"
-import registerHandler from "../handlers/register-user.handler.js"
+import loginHandler from "../handlers/login-user.handlers.js"
+import registerHandler from "../handlers/register-user.handlers.js"
 import { loginUserValidation, registerUserValidation } from "../validations/auth.validation.js"
 
 const authRouter = Router()

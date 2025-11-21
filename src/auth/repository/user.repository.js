@@ -1,5 +1,5 @@
 import ErrorHandler from "../../shared/errors/handle-error.js";
-import UserModel from "../models/user.model.js";
+import UserModel from "../models/user.models.js";
 
 /**
  * Registra un nuevo usuario en la base de datos

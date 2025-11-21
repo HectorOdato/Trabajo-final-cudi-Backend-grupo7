@@ -1,6 +1,6 @@
 import ErrorHandler from "../../shared/errors/handle-error.js"
 import handleHttpError from "../../shared/errors/handle-http-error.js"
-import { encryptPassword } from "../../shared/utils/handle-password.util.js"
+import { encryptPassword } from "../../shared/utils/handler-password.util.js"
 import { findUserByProp, registerUser } from "../repository/user.repository.js"
 
 const registerHandler = async (req, res) => {
