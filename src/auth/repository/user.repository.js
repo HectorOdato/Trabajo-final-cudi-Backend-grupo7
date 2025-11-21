@@ -1,5 +1,3 @@
-"user.repository.js"
-
 import ErrorHandler from "../../shared/errors/handle-error.js";
 import UserModel from "../models/user.model.js";
 
