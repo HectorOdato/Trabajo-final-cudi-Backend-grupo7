@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 import categoryRouter from "./category/routes/category.route.js";
 import productRouter from "./product/routers/product.router.js";
+import logger from "./shared/config/logger.config.js";
 import cors from "cors";
 /*import path from "path";*/
 
@@ -28,6 +29,10 @@ app.use((_, res) => {
   res.status(404).json("404");
 });
 
+app.use((req, _, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
+});
 
 mongoose.connect(process.env.URLDB).then(() => {
   console.log("base de datos conectada:", process.env.URLDB);
