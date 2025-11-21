@@ -8,11 +8,11 @@ const registerHandler = async (req, res) => {
 
     const user = req.body
 
-    if (findUserByProp({ email: req.body.email })) {
+    if (await findUserByProp({ email: req.body.email })) {
       throw new ErrorHandler("USER_ALREADY_EXISTS", 400)
     }
 
-    if (findUserByProp({ username: req.body.username })) {
+    if (await findUserByProp({ username: req.body.username })) {
       throw new ErrorHandler("USER_ALREADY_EXISTS", 400)
     }
 
@@ -26,6 +26,13 @@ const registerHandler = async (req, res) => {
       message: "Usuario creado con exito",
       data: {
         id: user.id,
+        name: user.name,
+        lastname: user.lastname,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        password: user.password,
+        role: user.role || 'user'
       }
     })
   } catch (error) {
