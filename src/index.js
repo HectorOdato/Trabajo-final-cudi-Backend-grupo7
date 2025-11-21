@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express from "express";
 import mongoose from "mongoose";
+import express from "express";
 import { v2 as cloudinary } from "cloudinary";
 import categoryRouter from "./category/routes/category.route.js";
 import productRouter from "./product/routers/product.router.js";
