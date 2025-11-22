@@ -37,6 +37,7 @@ export const save = async (req, res) => {
 
     validateIfIsEmpty(name)
     validateIfIsEmpty(description)
+    validateIfIsEmpty(image)
 
     const category = await createCategory({ name, description, image })
 
@@ -53,12 +54,13 @@ export const update = async (req, res) => {
   try {
     const id = validateID(req)
 
-    const { name, description,} = req.body
+    const { name, description,image} = req.body
 
     validateIfIsEmpty(name)
     validateIfIsEmpty(description)
+    validateIfIsEmpty(image)
 
-    const category = await updateCategory(id, { name, description })
+    const category = await updateCategory(id, { name, description,image })
 
     res.status(200).json({
       message: "categoria actualizada",

@@ -123,13 +123,13 @@ export async function update(req, res) {
 }
 
 
-export async function remove(req, res) {
+export async function disable(req, res) {
   try {
     const id = validateID(req)
 
-    const productoEliminado = await productRepository.eliminar(id);
+    const productoDeshabilitado = await productRepository.deshabilitar(id);
 
-    res.status(200).json(productoEliminado);
+    res.status(200).json(productoDeshabilitado);
   } catch (error) {
     res.status(500).json({
       mensaje: "error en el servidor",
@@ -155,6 +155,24 @@ export async function enable(req, res) {
     });
   }
 }
+
+export async function remove(req, res) {
+  try{
+    const id = validateID(req)
+
+    const productoEliminado = await productRepository.eliminar(id)
+    res.status(200).json(productoEliminado)
+}
+catch (error) {
+    console.log(error);
+    res.status(500).json({
+      mensaje: "error en el servidor",
+      error: error,
+    });
+  }
+}
+  
+
 
 export const getProductsByCategory = async (req, res) => {
   try {

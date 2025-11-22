@@ -14,7 +14,7 @@ export const getCategoryByProp = async (prop) => {
   const category = await CategoryModel.findOne({ ...prop, status: true })
 
   if (category == null) {
-    throw new Error("Category not found")
+    throw new Error("Categoria no funcional")
   }
 
   return category
@@ -24,7 +24,7 @@ export const createCategory = async (category) => {
   const newCategory = await CategoryModel.create(category)
   if (newCategory == null) {
 
-    throw new Error("Repository error: Cannot create category")
+    throw new Error("Repository: error creando categoria")
   }
 
   return newCategory
@@ -38,7 +38,7 @@ export const updateCategory = async (id, category) => {
   )
 
   if (categoryUpdated == null) {
-    throw new Error("Repository error: Cannot update category")
+    throw new Error("Repository error: error al actualizar")
   }
 
   return categoryUpdated
