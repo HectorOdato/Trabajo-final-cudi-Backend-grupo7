@@ -28,7 +28,6 @@ const registerHandler = async (req, res) => {
         id: user.id,
         name: user.name,
         lastname: user.lastname,
-        username: user.username,
         email: user.email,
         phone: user.phone,
         password: user.password,
