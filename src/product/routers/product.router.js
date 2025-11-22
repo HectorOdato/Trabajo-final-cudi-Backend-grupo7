@@ -11,7 +11,9 @@ productRouter.get("/:id", productParamValidation, productController.findById)
 
 productRouter.put("/:id", productBodyValidation, productController.update)
 
-productRouter.delete("/:id", productParamValidation , productController.remove)
+productRouter.delete("/:id", productParamValidation , productController.disable)
+
+productRouter.delete("/remove/:id", productParamValidation , productController.remove)
 
 productRouter.put("/enable/:id",productParamValidation, productController.enable)
 

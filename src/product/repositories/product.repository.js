@@ -34,13 +34,17 @@ export async function obtenerTodos() {
   return productos
 }
 
-export async function eliminar(id) {
-  //Product.findOneAndDelete() -> borrado fisico -> eliminar de db
-  const productoEliminado = await Product.findByIdAndUpdate(id, { status: false }) //borrado logico -> cambiar estado
-  return productoEliminado
+export async function deshabilitar(id) {
+  const productoDeshabilitado = await Product.findByIdAndUpdate(id, { status: false },{ new: true }) 
+  return productoDeshabilitado
 }
 
 export async function habilitar(id,data) {
   const productoHabilitado = await Product.findByIdAndUpdate(id,data, { new: true })
   return productoHabilitado
+}
+
+export async function eliminar(id) {
+  const productoEliminado = await Product.findByIdAndDelete(id)
+  return productoEliminado
 }
