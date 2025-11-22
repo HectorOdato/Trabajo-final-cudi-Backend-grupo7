@@ -14,6 +14,13 @@ export const categoryBodyValidation = [
     .notEmpty()
     .withMessage('La descripción es requerida'),
 
+    body('image')
+    .trim()
+    .notEmpty()
+    .withMessage('La imagen es requerida')
+    .isURL()
+    .withMessage('La imagen debe ser una URL válida'),
+
     body('active')
     .optional()
     .isBoolean()
