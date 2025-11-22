@@ -1,4 +1,3 @@
-import ErrorHandler from "../../shared/errors/handle-error.js";
 import UserModel from "../models/user.models.js";
 
 export const registerUser = async userData => {
