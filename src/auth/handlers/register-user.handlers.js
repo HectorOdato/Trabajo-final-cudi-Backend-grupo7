@@ -12,8 +12,12 @@ const registerHandler = async (req, res) => {
       throw new ErrorHandler("USER_ALREADY_EXISTS", 400)
     }
 
-    if (await findUserByProp({ username: req.body.username })) {
+    if (await findUserByProp({ user: req.body.user })) {
       throw new ErrorHandler("USER_ALREADY_EXISTS", 400)
+    }
+
+    if (!user.role) {
+      user.role = "user"
     }
 
     const hashedPassword = await encryptPassword(req.body.password)
