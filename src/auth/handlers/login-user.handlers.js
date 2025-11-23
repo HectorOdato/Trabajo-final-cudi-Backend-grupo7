@@ -1,28 +1,53 @@
-import { generateAccessToken, generateRefreshToken } from "../../shared/utils/generate-token.util.js"
-import { comparePassword } from "../../shared/utils/handler-password.util.js"
+import { generateAccessToken, generateRefreshToken } from "../../shared/utils/generate-token.util.js";
+import { comparePassword } from "../../shared/utils/handler-password.util.js";
+import { findUserByProp } from "../repository/user.repository.js";
+import ErrorHandler from "../../shared/errors/handle-error.js";
+import handleHttpError from "../../shared/errors/handle-http-error.js";
 
 const loginHandler = async (req, res) => {
   try {
-    const user = findUserByProp({ email: req.body.email })
+    const { email, password } = req.body;
 
-    comparePassword(req.body.password, user.password)
-
-    const payload = {
-      name: user.name,
-      role: user.role
+    // Buscar usuario por email
+    const user = await findUserByProp({ email });
+    if (!user) {
+      throw new ErrorHandler("EMAIL_OR_PASSWORD_INVALID", 400);
     }
 
-    const accessToken = generateAccessToken(payload)
-    const refreshToken = generateRefreshToken(payload)
+    // Comparar password
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
+      throw new ErrorHandler("EMAIL_OR_PASSWORD_INVALID", 400);
+    }
+
+    // Payload del token
+    const payload = {
+      id: user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+    };
+
+    // Generar tokens
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
 
     res.status(200).json({
       message: "Login exitoso",
       accessToken,
-      refreshToken
-    })
-  } catch (error) {
-    handleHttpError(res, error)
-  }
-}
+      refreshToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
 
-export default loginHandler
+  } catch (error) {
+    console.log("Error en login:", error);
+    handleHttpError(res, error);
+  }
+};
+
+export default loginHandler;

@@ -2,6 +2,7 @@ import ErrorHandler from "../../shared/errors/handle-error.js";
 import handleHttpError from "../../shared/errors/handle-http-error.js";
 import { encryptPassword } from "../../shared/utils/handler-password.util.js";
 import { findUserByProp, registerUser } from "../repository/user.repository.js";
+import jwt from "jsonwebtoken";
 
 const registerHandler = async (req, res) => {
   try {
@@ -27,8 +28,15 @@ const registerHandler = async (req, res) => {
     // Crear usuario en BD
     const newUser = await registerUser(user);
 
+    const token = jwt.sign(
+      { id: newUser._id, email: newUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     res.status(201).json({
       message: "Usuario creado con éxito",
+      token,
       data: {
         id: newUser._id,
         name: newUser.name,
