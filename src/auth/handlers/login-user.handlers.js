@@ -15,10 +15,9 @@ const loginHandler = async (req, res) => {
     }
 
     // Comparar password
-    const isMatch = await comparePassword(password, user.password);
-    if (!isMatch) {
-      throw new ErrorHandler("EMAIL_OR_PASSWORD_INVALID", 400);
-    }
+    // Comparar contraseñas
+    await comparePassword(password, user.password);
+
 
     // Payload del token
     const payload = {

@@ -1,9 +1,5 @@
 import jwt from "jsonwebtoken"
-
-const JWT_ACCESS = process.env.JWT_ACCESS
-const JWT_ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN
-const JWT_REFRESH = process.env.JWT_REFRESH
-const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN
+import { JWT_ACCESS, JWT_ACCESS_EXPIRES_IN, JWT_REFRESH, JWT_REFRESH_EXPIRES_IN } from "../constansts/constants.js"
 
 
 export const generateAccessToken = payload => {
