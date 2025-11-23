@@ -1,57 +1,46 @@
 import ErrorHandler from "../../shared/errors/handle-error.js";
 import handleHttpError from "../../shared/errors/handle-http-error.js";
-import { encryptPassword } from "../../shared/utils/handler-password.util.js";
-import { findUserByProp, registerUser } from "../repository/user.repository.js";
-import jwt from "jsonwebtoken";
+import { comparePassword } from "../../shared/utils/handler-password.util.js";
+import { findUserByProp } from "../repository/user.repository.js";
+import {
+  generateAccessToken,
+  generateRefreshToken
+} from "../../shared/utils/generate-token.util.js";
 
-const registerHandler = async (req, res) => {
+const loginHandler = async (req, res) => {
   try {
-    const user = req.body;
+    const { email, password } = req.body;
 
-    // Verificar email existente
-    const existingEmail = await findUserByProp({ email: user.email });
-    if (existingEmail) {
-      throw new ErrorHandler("USER_ALREADY_EXISTS", 400);
+    // Buscar usuario por email
+    const user = await findUserByProp({ email });
+
+    // Comparar contraseñas
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
+      throw new ErrorHandler("INVALID_PASSWORD", 401);
     }
 
-    // Verificar username (si existe en el payload)
-    if (user.username) {
-      const existingUsername = await findUserByProp({ username: user.username });
-      if (existingUsername) {
-        throw new ErrorHandler("USER_ALREADY_EXISTS", 400);
-      }
-    }
+    // Generar tokens
+    const payload = {
+      name: user.name,
+      role: user.role,
+    };
 
-    // Hashear contraseña
-    user.password = await encryptPassword(user.password);
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
 
-    // Crear usuario en BD
-    const newUser = await registerUser(user);
-
-    const token = jwt.sign(
-      { id: newUser._id, email: newUser.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-
-    res.status(201).json({
-      message: "Usuario creado con éxito",
-      token,
-      data: {
-        id: newUser._id,
-        name: newUser.name,
-        lastname: newUser.lastname,
-        email: newUser.email,
-        phone: newUser.phone,
-        role: newUser.role,
-        createdAt: newUser.createdAt,
-      },
+    res.status(200).json({
+      message: "Login exitoso",
+      accessToken,
+      refreshToken,
     });
 
   } catch (error) {
+    console.log("Error capturado:", error);
     handleHttpError(res, error);
   }
 };
 
-export default registerHandler;
+export default loginHandler;
+
 
