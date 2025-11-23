@@ -30,8 +30,10 @@ La aplicación incluye autenticación de usuarios, validación de datos en el fr
 - Hosting gratuito: Frontend desplegado en Vercel  
 - Git: Uso de Git para el control de versiones y colaboración en equipo  
 
+
 ## Instrucciones de Uso  
 ### Clonar el repositorio  
+
 
 git clone https://github.com/HectorOdato/Trabajo-final-cudi-Frontend-grupo7.git
 
@@ -157,3 +159,4 @@ Hosting
 | Frontend (Vercel) | *(agregar link)* |
 | Backend (Render)  | *(agregar link)* |
 | Base de Datos     | MongoDB Atlas    |
+
