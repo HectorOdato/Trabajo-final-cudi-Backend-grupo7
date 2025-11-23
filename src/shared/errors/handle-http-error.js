@@ -1,7 +1,7 @@
 import ErrorHandler from "./handle-error.js";
 
 const handleHttpError = (res, error) => {
-  console.error("Error capturado:", error);
+  console.error("ERROR REAL ->", error);
 
   if (error instanceof ErrorHandler) {
     return res.status(error.statusCode).json({ mensaje: error.message });
@@ -11,3 +11,4 @@ const handleHttpError = (res, error) => {
 };
 
 export default handleHttpError;
+
