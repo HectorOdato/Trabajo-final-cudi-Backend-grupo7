@@ -1,18 +1,31 @@
 import UserModel from "../models/user.models.js";
+import { encryptPassword } from "../../shared/utils/handler-password.util.js";
 
-export const registerUser = async userData => {
+/**
+ * Crear usuario (REGISTER)
+ */
+export const registerUser = async (userData) => {
+  // Hashear contraseña antes de guardar
+  const hashedPassword = await encryptPassword(userData.password);
+  userData.password = hashedPassword;
+
+  // Crear usuario
   const user = await UserModel.create(userData);
 
-  // Ocultar password antes de retornar
-  user.set('password', undefined, { strict: false });
+  // No devolver password nunca
+  user.set("password", undefined, { strict: false });
 
   return user;
 };
 
-export const findUserByProp = async prop => {
-  const user = await UserModel
-    .findOne(prop) // ← FIX IMPORTANTE
-    .select('password name role email phone lastName');
-
-  return user; // Si no existe devuelve null (no debería tirar error acá)
+/**
+ * Buscar usuario por propiedad (LOGIN usa esto)
+ */
+export const findUserByProp = async (prop) => {
+  return await UserModel
+    .findOne(prop)
+    .select("+password") // incluir password aunque esté oculto en el schema
+    .select("name lastname phone email role"); // demás campos visibles
 };
+
+

@@ -1,33 +1,36 @@
-import { generateAccessToken, generateRefreshToken } from "../../shared/utils/generate-token.util.js";
-import { comparePassword } from "../../shared/utils/handler-password.util.js";
-import { findUserByProp } from "../repository/user.repository.js";
 import ErrorHandler from "../../shared/errors/handle-error.js";
 import handleHttpError from "../../shared/errors/handle-http-error.js";
+import { comparePassword } from "../../shared/utils/handler-password.util.js";
+import { findUserByProp } from "../repository/user.repository.js";
+import {
+  generateAccessToken,
+  generateRefreshToken
+} from "../../shared/utils/generate-token.util.js";
 
 const loginHandler = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Buscar usuario por email
+    // Buscar usuario
     const user = await findUserByProp({ email });
+
     if (!user) {
-      throw new ErrorHandler("EMAIL_OR_PASSWORD_INVALID", 400);
+      throw new ErrorHandler("Usuario o contraseña incorrectos", 401);
     }
 
-    // Comparar password
     // Comparar contraseñas
-    await comparePassword(password, user.password);
+    const isMatch = await comparePassword(password, user.password); // <-- ACÁ ESTABA EL ERROR
 
+    if (!isMatch) {
+      throw new ErrorHandler("Usuario o contraseña incorrectos", 401);
+    }
 
-    // Payload del token
+    // Crear payload
     const payload = {
-      id: user._id,
       name: user.name,
       role: user.role,
-      email: user.email,
     };
 
-    // Generar tokens
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
@@ -35,16 +38,10 @@ const loginHandler = async (req, res) => {
       message: "Login exitoso",
       accessToken,
       refreshToken,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
     });
 
   } catch (error) {
-    console.log("Error en login:", error);
+    console.log("Error capturado:", error);
     handleHttpError(res, error);
   }
 };

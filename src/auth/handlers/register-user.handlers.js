@@ -1,38 +1,30 @@
 import ErrorHandler from "../../shared/errors/handle-error.js";
 import handleHttpError from "../../shared/errors/handle-http-error.js";
-import { comparePassword } from "../../shared/utils/handler-password.util.js";
-import { findUserByProp } from "../repository/user.repository.js";
-import {
-  generateAccessToken,
-  generateRefreshToken
-} from "../../shared/utils/generate-token.util.js";
+import { registerUser, findUserByProp } from "../repository/user.repository.js";
+import { encryptPassword } from "../../shared/utils/handler-password.util.js";
 
-const loginHandler = async (req, res) => {
+const registerHandler = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, lastname, phone, email, password } = req.body;
 
-    // Buscar usuario por email
-    const user = await findUserByProp({ email });
-
-    // Comparar contraseñas
-    const isMatch = await comparePassword(password, user.password);
-    if (!isMatch) {
-      throw new ErrorHandler("INVALID_PASSWORD", 401);
+    // verificar si ya existe
+    const existing = await findUserByProp({ email });
+    if (existing) {
+      throw new ErrorHandler("El email ya está registrado", 400);
     }
 
-    // Generar tokens
-    const payload = {
-      name: user.name,
-      role: user.role,
-    };
+    // registrar usuario
+    const newUser = await registerUser({
+      name,
+      lastname,
+      phone,
+      email,
+      password
+    });
 
-    const accessToken = generateAccessToken(payload);
-    const refreshToken = generateRefreshToken(payload);
-
-    res.status(200).json({
-      message: "Login exitoso",
-      accessToken,
-      refreshToken,
+    res.status(201).json({
+      message: "Usuario creado correctamente",
+      user: newUser
     });
 
   } catch (error) {
@@ -40,7 +32,4 @@ const loginHandler = async (req, res) => {
     handleHttpError(res, error);
   }
 };
-
-export default loginHandler;
-
-
+export default registerHandler;
