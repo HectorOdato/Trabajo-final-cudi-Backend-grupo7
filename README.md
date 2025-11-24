@@ -48,7 +48,7 @@ npm run dev
 
 | Nombre              | GitHub                                                                             |
 | ------------------- | -----------------------------------------------------------------------------------|
-| **Héctor Odato**    | [https://github.com/HectorOdato](https://github.com/HectorOdato)                   |
+| **Hector Odato**    | [https://github.com/HectorOdato](https://github.com/HectorOdato)                   |
 | **Leonardo Ortiz**  | [https://github.com/leonardo-jesus-ortiz](https://github.com/leonardo-jesus-ortiz) |
 | **Mariano Maza**    | [https://github.com/MarianoMaza](https://github.com/MarianoMaza)                   |
 
@@ -156,7 +156,7 @@ Backend
 Hosting
 | Servicio          | URL              |
 | ----------------- | ---------------- |
-| Frontend (Vercel) | *(agregar link)* |
-| Backend (Render)  | *(agregar link)* |
+| Frontend (Vercel) | *https://trabajo-final-cudi-frontend-grupo7.vercel.app* |
+| Backend (Render)  | *https://trabajo-final-cudi-backend-grupo7.vercel.app* |
 | Base de Datos     | MongoDB Atlas    |
 
