@@ -36,8 +36,15 @@ app.use((req, _, next) => {
 });
 
 /*ERROR 404*/ 
-app.use((_, res) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
+app.get("/", (req, res) => {
+  res.json({
+    estado: "API funcionando correctamente 🚀",
+    rutas: {
+      productos: "/api/products",
+      categorias: "/api/categories",
+      auth: "/api/auth"
+    }
+  });
 });
 
 /* CONEXION A MONGODB SERVER */
