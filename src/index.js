@@ -8,7 +8,6 @@ import connectMongoDB from "./shared/config/mongodb.config.js";
 import logger from "./shared/config/logger.config.js";
 import cors from "cors";
 import authRouter from "./auth/routes/auth.router.js";
-/*import path from "path";*/
 
 /*CONEXION A CLOUDINARY*/
 cloudinary.config({
@@ -26,7 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/products", productRouter)
 app.use("/api/categories", categoryRouter)
 app.use('/api/auth', authRouter);
-/*app.use('product/uploads/images', express.static(path.join(process.cwd(), 'product/uploads/images')));*/
 
 
 /* SISTEMA  DE LOGS */
