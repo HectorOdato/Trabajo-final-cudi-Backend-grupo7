@@ -2,6 +2,7 @@ import express from "express"
 import { productBodyValidation, productParamValidation, validarImagen } from "../validations/product.validation.js" 
 import * as productController from "../handlers/product.handler.js" 
 import {upload} from "../../shared/utils/multer.js"; 
+
 const productRouter = express.Router() 
 productRouter.post('/', upload.single('image'), validarImagen, productBodyValidation, productController.createProduct); 
 productRouter.get("/:id", productParamValidation, productController.findById) 
