@@ -28,9 +28,6 @@ app.use("/api/categories", categoryRouter)
 app.use('/api/auth', authRouter);
 /*app.use('product/uploads/images', express.static(path.join(process.cwd(), 'product/uploads/images')));*/
 
-app.use((_, res) => {
-  res.status(404).json("404");
-});
 
 /* SISTEMA  DE LOGS */
 app.use((req, _, next) => {
@@ -38,10 +35,12 @@ app.use((req, _, next) => {
   next();
 });
 
-/* VARIABLES DE ENTORNO */
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || "localhost";
+/*ERROR 404*/ 
+app.use((_, res) => {
+  res.status(404).json({ error: "Ruta no encontrada" });
+});
 
 /* CONEXION A MONGODB SERVER */
 connectMongoDB()
-app.listen(PORT, () => console.log(`Servidor iniciado http://${HOST}:${PORT}`));
+
+export default app;
