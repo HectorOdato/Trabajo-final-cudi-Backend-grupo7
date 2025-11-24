@@ -1,11 +1,25 @@
 import mongoose from "mongoose";
 
-const connectMongoDB = () => {
-    mongoose
-    .connect(process.env.URLDB)
-    .then(() => console.log("base de datos conectada : ", process.env.URLDB))
-    .catch((err) => console.error('❌ Error conectando a MongoDB:', err));
-    ;
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-export default connectMongoDB
+const connectMongoDB = async () => {
+  if (cached.conn) return cached.conn;
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.URLDB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((mongoose) => mongoose);
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+};
+
+export default connectMongoDB;

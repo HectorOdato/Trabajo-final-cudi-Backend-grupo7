@@ -18,7 +18,14 @@ cloudinary.config({
 
 const app = express();
 
+
+
 /* MIDDLEWARES */
+app.use(async (req, res, next) => {
+  await connectMongoDB();
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -45,8 +52,5 @@ app.get("/", (req, res) => {
   });
 });
 
-
-/* CONEXION A MONGODB SERVER */
-connectMongoDB()
 
 export default app;
