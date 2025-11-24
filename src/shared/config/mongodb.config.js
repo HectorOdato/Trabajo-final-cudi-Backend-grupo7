@@ -11,10 +11,7 @@ const connectMongoDB = async () => {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(process.env.URLDB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
+      .connect(process.env.URLDB)
       .then((mongoose) => mongoose);
   }
 
