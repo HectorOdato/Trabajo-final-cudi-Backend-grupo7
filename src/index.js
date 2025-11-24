@@ -35,7 +35,7 @@ app.use((req, _, next) => {
   next();
 });
 
-/*ERROR 404*/ 
+/*CONEXION A API*/ 
 app.get("/", (req, res) => {
   res.json({
     estado: "API funcionando correctamente 🚀",
