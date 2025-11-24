@@ -45,6 +45,7 @@ app.get("/", (req, res) => {
   });
 });
 
+
 /* CONEXION A MONGODB SERVER */
 connectMongoDB()
 
