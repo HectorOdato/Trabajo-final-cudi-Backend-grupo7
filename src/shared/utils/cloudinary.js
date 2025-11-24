@@ -1,16 +1,18 @@
 import { v2 as cloudinary } from "cloudinary";
 
-export const subirImagenCloudinary = async (filePath) => {
-    const fs = await import('fs'); 
+export const subirImagenCloudinary = async (fileBuffer) => {
+    const { Buffer } = await import('buffer'); 
     try {
-        const result = await cloudinary.uploader.upload(filePath, {
-            folder: "productsEcommerseUTN" 
+        const b64 = Buffer.from(fileBuffer).toString("base64");
+        let dataURI = "data:" + mimeType + ";base64," + b64; 
+
+        const result = await cloudinary.uploader.upload(dataURI, {
+            folder: "productsEcommerseUTN",
+            resource_type: "auto", 
         });
-        fs.default.unlinkSync(filePath); 
         return result; 
     } catch (error) {
-        fs.default.unlinkSync(filePath); 
         console.error("Error al subir a Cloudinary:", error);
-        throw new Error("Fallo al subir la imagen a Cloudinary");
+        throw new Error("Fallo al subir la imagen");
     }
 };

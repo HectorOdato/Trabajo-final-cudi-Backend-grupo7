@@ -13,7 +13,7 @@ export const createProduct = async (req, res) => {
     let image = null
 
     if (req.file){
-      const cloudinaryResult = await subirImagenCloudinary(req.file.path);
+      const cloudinaryResult = await subirImagenCloudinary(req.file.buffer, req.file.mimetype);
       image = cloudinaryResult.secure_url;
     }
 
