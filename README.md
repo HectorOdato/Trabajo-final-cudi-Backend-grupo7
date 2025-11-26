@@ -99,6 +99,7 @@ npm install express mongoose cors cloudinary dotenv nodemon
 Backend
 
 
+```
 /src
 │
 ├── /auth # Módulo de autenticación de usuarios
@@ -150,6 +151,7 @@ Backend
 │   └── validate-id.util.js
 │
 └── index.js # Punto de entrada principal del servidor (configuración Express, BD y rutas)
+```
 
 
 
