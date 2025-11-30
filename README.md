@@ -31,20 +31,22 @@ La aplicación incluye autenticación de usuarios, validación de datos en el fr
 - Git: Uso de Git para el control de versiones y colaboración en equipo  
 
 
-## Instrucciones de Uso  
-### Clonar el repositorio  
+# Instrucciones de Uso 
 
+## Clonar el repositorio  
 
+```
 git clone https://github.com/HectorOdato/Trabajo-final-cudi-Frontend-grupo7.git
 
 cd Trabajo-final-cudi-Frontend-grupo7
-npm install
 
+npm install
 npm run dev
+```
 
 ---
 
-*Integrantes del Equipo – Grupo 7/G*
+## Integrantes del Equipo – Grupo 7/G
 
 | Nombre              | GitHub                                                                             |
 | ------------------- | -----------------------------------------------------------------------------------|
@@ -70,7 +72,7 @@ npm run dev
 
 ## 🧩 Tecnologías Utilizadas
 
-### **Backend**
+### Backend
 - Node.js + Express
 - MongoDB + Mongoose
 - Cloudinary
@@ -81,22 +83,25 @@ npm run dev
 
 ## ⚙ Instalación y ejecución
 
-## ⚙ Clonar Backend
+### ⚙ Clonar Backend
 
+```
 git clone https://github.com/HectorOdato/Trabajo-final-cudi-Backend-grupo7.git
 cd Trabajo-final-cudi-Backend-grupo7
 npm install
 npm run dev
+```
 
-Dependencias necesarias Backend
-
+### Dependencias necesarias Backend
+```
 npm install express mongoose cors cloudinary dotenv nodemon
+```
 
 ---
 
 
-📁 Estructura del Proyecto
-Backend
+## 📁 Estructura del Proyecto
+### Backend
 
 
 ```
