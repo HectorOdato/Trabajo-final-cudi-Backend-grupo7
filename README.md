@@ -52,7 +52,7 @@ npm run dev
 | ------------------- | -----------------------------------------------------------------------------------|
 | **Hector Odato**    | [https://github.com/HectorOdato](https://github.com/HectorOdato)                   |
 | **Leonardo Ortiz**  | [https://github.com/leonardo-jesus-ortiz](https://github.com/leonardo-jesus-ortiz) |
-| **Mariano Maza**    | [https://github.com/MarianoMaza](https://github.com/Mariano0910)                   |
+| **Mariano Maza**    | [https://github.com/Mariano0910](https://github.com/Mariano0910)                   |
 
 ---
 
